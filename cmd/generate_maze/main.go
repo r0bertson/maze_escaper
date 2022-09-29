@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	builder := maze.NewBuilder(
 		flag.Int("d", 5, "max depth of maze tree"),
 		flag.Float64("pr", 0.4, "obstacle occurrence rate"),

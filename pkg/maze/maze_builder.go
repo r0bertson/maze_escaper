@@ -21,6 +21,7 @@ type Builder struct {
 	Directions        utils.Tokens
 	SpecialDirections utils.Tokens
 	Obstacles         utils.Tokens
+	ExitsRemaining    int
 }
 
 func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstaclesFilepath, directionsFilepath, specialDirectionsPath *string) Builder {
@@ -37,6 +38,7 @@ func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstacle
 		obsRate = *obstacleRate
 	}
 	return Builder{
+		ExitsRemaining:    1,
 		MaxDepth:          depth,
 		ObstacleRate:      wideRate,
 		PathWideningRate:  obsRate,
@@ -47,7 +49,11 @@ func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstacle
 }
 
 func (mb *Builder) GetDirectionRandomDestination(depth int) interface{} {
-	if rand.Float64() < mb.PathWideningRate && depth < mb.MaxDepth {
+	if rand.Float64() < 0.01 && mb.ExitsRemaining > 0 {
+		mb.ExitsRemaining -= 1
+		return "exit"
+	}
+	if rand.Float64() < mb.PathWideningRate && depth <= mb.MaxDepth {
 		return mb.GenerateRandomPath(depth + 1)
 	}
 	if rand.Float64() < mb.ObstacleRate {
@@ -62,11 +68,6 @@ func (mb *Builder) GenerateRandomMaze() *Maze {
 	for _, direction := range mb.Directions {
 		initialPosition[direction] = mb.GenerateRandomPath(1)
 	}
-
-	/*TODO: This is bad because the exit will always be one choice away from the starting point.
-	  It should be randomly placed somewhere */
-	initialPosition[mb.SpecialDirections.GetRandom()] = "exit"
-
 	return &Maze{Start: initialPosition}
 }
 
