@@ -18,10 +18,9 @@ func main() {
 	pathWideningRate := flag.Float64("pr", 0.2, "path widening rate")
 	obsFilepath := flag.String("obs", "../../pkg/seed/obstacles.txt", "path to obstacles file")
 	dirFilepath := flag.String("dir", "../../pkg/seed/directions.txt", "path to directions file")
-	specialDirFilepath := flag.String("spe", "../../pkg/seed/special_directions.txt", "path to special directions file")
 	export := flag.Bool("export", false, "export executions to file")
 	flag.Parse()
-	builder := maze.NewBuilder(maxDepth, obstacleRate, pathWideningRate, obsFilepath, dirFilepath, specialDirFilepath)
+	builder := maze.NewBuilder(maxDepth, obstacleRate, pathWideningRate, obsFilepath, dirFilepath)
 
 	random := builder.GenerateRandomMaze()
 	solution := random.FindExitPath()

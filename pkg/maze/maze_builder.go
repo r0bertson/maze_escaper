@@ -8,28 +8,25 @@ import (
 
 var DefaultDirections = []string{"forward", "right", "left", "upstairs"}
 var DefaultObstacles = []string{"dragon", "demon", "lion", "dead end"}
-var DefaultSpecialDirections = []string{"door"}
 
 // Builder holds all configurations needed to create a random maze.
 type Builder struct {
-	MaxDepth          int
-	ObstacleRate      float64
-	PathWideningRate  float64
-	Directions        utils.Tokens
-	SpecialDirections utils.Tokens
-	Obstacles         utils.Tokens
-	ExitsRemaining    int
+	MaxDepth         int
+	ObstacleRate     float64
+	PathWideningRate float64
+	Directions       utils.Tokens
+	Obstacles        utils.Tokens
+	ExitsRemaining   int
 }
 
-func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstaclesFilepath, directionsFilepath, specialDirectionsPath *string) Builder {
+func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstaclesFilepath, directionsFilepath *string) Builder {
 	return Builder{
-		ExitsRemaining:    1,
-		MaxDepth:          *maxDepth,
-		ObstacleRate:      *obstacleRate,
-		PathWideningRate:  *pathWideningRate,
-		Directions:        LoadInput(directionsFilepath, DefaultDirections),
-		SpecialDirections: LoadInput(specialDirectionsPath, DefaultSpecialDirections),
-		Obstacles:         LoadInput(obstaclesFilepath, DefaultObstacles),
+		ExitsRemaining:   1,
+		MaxDepth:         *maxDepth,
+		ObstacleRate:     *obstacleRate,
+		PathWideningRate: *pathWideningRate,
+		Directions:       LoadInput(directionsFilepath, DefaultDirections),
+		Obstacles:        LoadInput(obstaclesFilepath, DefaultObstacles),
 	}
 }
 
