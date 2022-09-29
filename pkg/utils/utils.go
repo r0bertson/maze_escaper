@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 const CommentChar = "#"
@@ -45,4 +46,9 @@ func ReadTokensFromFile(filepath string) (Tokens, error) {
 
 func (t Tokens) GetRandom() string {
 	return t[rand.Intn(len(t))]
+}
+
+func GetFileTimestamp() string {
+	ts := time.Now().UTC().Format(time.RFC3339)
+	return strings.Replace(strings.Replace(ts, ":", "", -1), "-", "", -1)
 }

@@ -9,9 +9,6 @@ import (
 var DefaultDirections = []string{"forward", "right", "left", "upstairs"}
 var DefaultObstacles = []string{"dragon", "demon", "lion", "dead end"}
 var DefaultSpecialDirections = []string{"door"}
-var DefaultMaxDepth = 10
-var DefaultWideningRate = 0.2
-var DefaultObstacleRate = 0.4
 
 // Builder holds all configurations needed to create a random maze.
 type Builder struct {
@@ -25,23 +22,12 @@ type Builder struct {
 }
 
 func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstaclesFilepath, directionsFilepath, specialDirectionsPath *string) Builder {
-	depth := DefaultMaxDepth
-	if maxDepth != nil {
-		depth = *maxDepth
-	}
-	wideRate := DefaultWideningRate
-	if pathWideningRate != nil {
-		wideRate = *pathWideningRate
-	}
-	obsRate := DefaultObstacleRate
-	if obstacleRate != nil {
-		obsRate = *obstacleRate
-	}
+
 	return Builder{
 		ExitsRemaining:    1,
-		MaxDepth:          depth,
-		ObstacleRate:      wideRate,
-		PathWideningRate:  obsRate,
+		MaxDepth:          *maxDepth,
+		ObstacleRate:      *obstacleRate,
+		PathWideningRate:  *pathWideningRate,
 		Directions:        LoadInput(directionsFilepath, DefaultDirections),
 		SpecialDirections: LoadInput(specialDirectionsPath, DefaultSpecialDirections),
 		Obstacles:         LoadInput(obstaclesFilepath, DefaultObstacles),
