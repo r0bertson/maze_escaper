@@ -1,7 +1,5 @@
 package maze
 
-import "github.com/rs/zerolog/log"
-
 // Path is a named type for a map[string]interface{} to allow adding extended functionality to a composite type.
 type Path map[string]interface{}
 
@@ -14,14 +12,16 @@ If this feature is desired, we should move away from this json-like structure.
 */
 func (r *Path) FindExit() []string {
 	for direction, value := range *r {
-		switch t := value.(type) {
+		switch value.(type) {
 		case string:
 			if value == "exit" {
 				return []string{direction}
 			}
 			continue //found obstacle, abandon this route
-		case interface{}:
-			nextPath := value.(Path)
+		case map[string]interface{}:
+			//sometimes casting map[string]interface{} to Path throws and error
+			//this is handled by another case, but needs investigation
+			var nextPath Path = value.(map[string]interface{})
 			if nextPath != nil {
 				path := nextPath.FindExit()
 				if len(path) > 0 {
@@ -29,8 +29,16 @@ func (r *Path) FindExit() []string {
 					return append([]string{direction}, path...)
 				}
 			}
+		case Path:
+			if nextPath := value.(Path); nextPath != nil {
+				path := nextPath.FindExit()
+				if len(path) > 0 {
+					//if result is not empty, an exit was found
+					return append([]string{direction}, path...)
+				}
+			}
 		default:
-			log.Info().Msgf("unexpected path representation %v", t)
+			//log.Info().Msgf("unexpected path representation %v", t)
 			continue
 		}
 

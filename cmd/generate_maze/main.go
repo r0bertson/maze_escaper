@@ -43,10 +43,5 @@ func main() {
 			log.Warn().Err(err)
 		}
 	}
-	/*enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "    ")
-	if err := enc.Encode(random.Start); err != nil {
-		log.Fatal().Err(err)
-	}*/
 
 }

@@ -22,7 +22,6 @@ type Builder struct {
 }
 
 func NewBuilder(maxDepth *int, obstacleRate, pathWideningRate *float64, obstaclesFilepath, directionsFilepath, specialDirectionsPath *string) Builder {
-
 	return Builder{
 		ExitsRemaining:    1,
 		MaxDepth:          *maxDepth,
@@ -77,13 +76,14 @@ func (mb *Builder) GenerateRandomPath(depth int) Path {
 
 	return room
 }
+
 func LoadInput(filepath *string, defaultData []string) utils.Tokens {
 	if filepath == nil {
 		return defaultData
 	}
 	loaded, err := utils.ReadTokensFromFile(*filepath)
 	if err != nil {
-		log.Warn().Msgf("couldn't read input file (%s) (error: %v) using default instead", filepath, err)
+		log.Warn().Msgf("couldn't read input file (%s) (error: %v) using default instead", *filepath, err)
 		return defaultData
 	}
 	return loaded
