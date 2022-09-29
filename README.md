@@ -4,12 +4,12 @@
 Just pass your maze (as JSON) to `cmd/maze_escaper/main.go` like this:
 ```
 cd cmd\maze_escaper
-go run main.go "{\"forward\": \"exit\"}
+go run main.go "{\"forward\": \"exit\"}"
 ```
 
 
 ### Generating a random maze and it's solution
-You can simply run `cmd/generate_maze/main.go` with it's default params:
+You can simply run `cmd/generate_maze/main.go` with its default params:
 ```
 cd cmd\generate_maze
 go run main.go
