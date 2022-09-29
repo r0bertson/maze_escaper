@@ -1,0 +1,24 @@
+############### mythical creatures
+dragon
+chimera
+elder lich
+werewolf
+skeleton
+griffin
+minotaur
+goblin
+lava golem
+demon
+vampire
+ogre
+############### dangerous animals
+serpent
+lion
+crocodile
+alligator
+############### traps
+bear trap
+poisonous gas
+hole with spikes
+flowing lava
+dead end

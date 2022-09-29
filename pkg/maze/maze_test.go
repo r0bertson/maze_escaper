@@ -40,18 +40,18 @@ const (
 
 var loadMazeSamplesFromPDF = []string{firstInputFromPDF, secondInputFromPDF, thirdInputFromPDF}
 
-// TestLoadMaze_PDFSamples testes if all samples are loaded and valid (initial room has at least one `door` to move)
+// TestLoadMaze_PDFSamples testes if all samples are loaded and valid (initial position has at least one `direction` to move)
 func TestLoadMaze_PDFSamples(t *testing.T) {
 	for idx, input := range loadMazeSamplesFromPDF {
 		loadedMaze, err := LoadMaze(input)
-		if err != nil || len(loadedMaze.InitialRoom) == 0 {
+		if err != nil || len(loadedMaze.Start) == 0 {
 			t.Errorf("unable to load sample maze index at %d, error was: %v", idx, err)
 		}
 	}
 }
 
 // TestLoadMaze_EmptyInput will try to load an empty representation of a Maze `{}`.
-// Since this is an initial room without doors to move, it is considered invalid and an error is expected.
+// Since this is an initial position without directions to move, it is considered invalid and an error is expected.
 func TestLoadMaze_EmptyInput(t *testing.T) {
 	_, err := LoadMaze(emptyMaze)
 	if err == nil {
@@ -59,11 +59,11 @@ func TestLoadMaze_EmptyInput(t *testing.T) {
 	}
 }
 
-// TestLoadMaze_InvalidStructure will try to load a maze with invalid structure (room represented by invalid types)
-// it should load without any issue and invalid rooms will be ignored when trying to find an exit.
+// TestLoadMaze_InvalidStructure will try to load a maze with invalid structure (a path represented by invalid types)
+// it should load without any issue and invalid paths will be ignored when trying to find an exit.
 func TestLoadMaze_InvalidStructure(t *testing.T) {
 	loadedMaze, err := LoadMaze(mazeWithInvalidStructure)
-	if err != nil || len(loadedMaze.InitialRoom) == 0 {
+	if err != nil || len(loadedMaze.Start) == 0 {
 		t.Errorf("maze wasn't loaded properly. invalid structure shouldn't affect maze loading")
 	}
 }

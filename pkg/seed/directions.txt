@@ -1,0 +1,5 @@
+forward
+right
+left
+upstairs
+downstairs

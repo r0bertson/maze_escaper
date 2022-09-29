@@ -13,11 +13,11 @@ func main() {
 		log.Fatal().Msg("expected maze in json format")
 		return
 	}
-	maze, err := maze.LoadMaze(args[0])
+	loaded, err := maze.LoadMaze(args[0])
 	if err != nil {
 		log.Fatal().Msg("unable to load maze")
 	}
 
-	path := maze.FindExitPath()
+	path := loaded.FindExitPath()
 	fmt.Println(path)
 }

@@ -12,12 +12,12 @@ const (
 
 // Maze holds the initial position of a maze, which is represented as a JSON-like object key-value object chaining (map[string]interface{}).
 type Maze struct {
-	InitialRoom Room
+	Start Path
 }
 
 // FindExitPath looks for the exit. Returns "Sorry" if there isn't one.
 func (m *Maze) FindExitPath() interface{} {
-	if result := m.InitialRoom.FindExit(); len(result) > 0 {
+	if result := m.Start.FindExit(); len(result) > 0 {
 		return result
 	}
 	return NonExistentExitMsg
@@ -27,10 +27,10 @@ func (m *Maze) FindExitPath() interface{} {
 // If this map is empty, returns an error.
 func LoadMaze(input string) (*Maze, error) {
 	var maze Maze
-	if err := json.Unmarshal([]byte(input), &maze.InitialRoom); err != nil {
+	if err := json.Unmarshal([]byte(input), &maze.Start); err != nil {
 		return nil, err
 	}
-	if len(maze.InitialRoom) == 0 {
+	if len(maze.Start) == 0 {
 		return nil, errors.New(InvalidMazeErrorMsg)
 	}
 	return &maze, nil
