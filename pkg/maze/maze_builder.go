@@ -63,6 +63,7 @@ func (mb *Builder) GetDirectionRandomDestination(depth int) interface{} {
 }
 
 // GenerateRandomMaze generates a randomized maze.
+// Depending on MaxDepth, there is no guarantee that the maze will have an exit
 func (mb *Builder) GenerateRandomMaze() *Maze {
 	var initialPosition Path = map[string]interface{}{}
 	for _, direction := range mb.Directions {

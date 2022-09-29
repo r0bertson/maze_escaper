@@ -6,10 +6,13 @@ import (
 	"fmt"
 	"github.com/r0bertson/maze_escaper/pkg/maze"
 	"github.com/rs/zerolog/log"
+	"math/rand"
 	"os"
+	"time"
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	builder := maze.NewBuilder(
 		flag.Int("d", 5, "max depth of maze tree"),
 		flag.Float64("pr", 0.4, "obstacle occurrence rate"),
